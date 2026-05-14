@@ -1,0 +1,40 @@
+﻿@model List<Oficcios360.Models.Encuesta>
+
+<div class="p-3">
+
+    <h4 class="mb-3 text-primary">
+        Encuestas Registradas
+    </h4>
+
+    <div class="alert alert-info">
+        Total respuestas: <strong>@Model.Count</strong>
+    </div>
+
+    @foreach (var e in Model)
+    {
+        <div class="card mb-3 shadow-sm">
+            <div class="card-body">
+
+                <h6 class="fw-bold">
+                    Calificación: @e.Rating
+                </h6>
+
+                <p>
+                    <strong>Completó trámite:</strong>
+                    @e.Completado
+                </p>
+
+                <p>
+                    <strong>Comentario:</strong><br />
+                    @e.Comentario
+                </p>
+
+                <small class="text-muted">
+                    @e.Fecha
+                </small>
+
+            </div>
+        </div>
+    }
+
+</div>

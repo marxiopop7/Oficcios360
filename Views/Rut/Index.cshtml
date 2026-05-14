@@ -1,0 +1,119 @@
+﻿@model Oficcios360.Models.Instrucciones
+
+@if (TempData["MensajeGracias"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
+        <i class="bi bi-check-circle-fill"></i> @TempData["MensajeGracias"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+<div class="card p-4 border-0 shadow">
+    <div class="row">
+        <div class="col-md-5 bg-dark text-white p-4 rounded">
+            <h4>¿Qué es el RUT?</h4>
+            <p>@Model.QueEsElRut</p>
+            <hr />
+            <h5>Objetivo del Módulo</h5>
+            <p>@Model.ObjetivoModulo</p>
+        </div>
+        <div class="col-md-7 p-4">
+            <h4 class="text-primary">Guía Paso a Paso</h4>
+            <ul class="list-group list-group-flush mb-4">
+                @foreach (var paso in Model.PasosDetallados)
+                {
+                    <li class="list-group-item">@paso</li>
+                }
+            </ul>
+            <button onclick="iniciarTramite()" class="btn btn-success w-100 py-3 fw-bold">
+                ACCEDER A PLATAFORMA DIAN
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function iniciarTramite() {
+        // Modo espera: Desenfocar el fondo
+        document.body.style.filter = "grayscale(80%)";
+        const win = window.open("https://muisca.dian.gov.co/", "DIAN", "width=1100,height=800");
+
+        const loop = setInterval(() => {
+            if (win.closed) {
+                clearInterval(loop);
+                document.body.style.filter = "none";
+                // Redirigir a la encuesta detallada
+                window.location.href = "/Rut/Encuesta";
+            }
+        }, 1000);
+    }
+</script>
+
+<!-- BOTÓN FLOTANTE -->
+<button id="btnPanel"
+        class="btn btn-dark shadow"
+        onclick="abrirPanel()">
+    Ver Encuestas
+</button>
+
+<!-- PANEL LATERAL -->
+<div id="panelEncuestas">
+
+    <div class="d-flex justify-content-between align-items-center p-3 border-bottom">
+        <h5>Panel de Encuestas</h5>
+
+        <button class="btn btn-sm btn-danger"
+                onclick="cerrarPanel()">
+            X
+        </button>
+    </div>
+
+    <div id="contenidoEncuestas">
+        Cargando...
+    </div>
+
+</div>
+
+<style>
+
+    #btnPanel {
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        z-index: 9999;
+        border-radius: 50px;
+        padding: 12px 20px;
+    }
+
+    #panelEncuestas {
+        position: fixed;
+        top: 0;
+        right: -450px;
+        width: 420px;
+        height: 100%;
+        background: white;
+        box-shadow: -5px 0 15px rgba(0,0,0,0.2);
+        transition: 0.4s;
+        z-index: 99999;
+        overflow-y: auto;
+    }
+
+</style>
+
+<script>
+
+    async function abrirPanel() {
+
+        document.getElementById("panelEncuestas").style.right = "0";
+
+        let response = await fetch('/Rut/ObtenerEncuestas');
+
+        let html = await response.text();
+
+        document.getElementById("contenidoEncuestas").innerHTML = html;
+    }
+
+    function cerrarPanel() {
+        document.getElementById("panelEncuestas").style.right = "-450px";
+    }
+
+</script>

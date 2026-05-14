@@ -1,0 +1,123 @@
+﻿@model Oficcios360.Models.Estudiante
+
+@{
+    var db = new Oficcios360.Models.FormatoPrestablecidoBD();
+    var cartaFinal = db.ObtenerPlantillaCarta(Model);
+}
+
+<div class="card shadow-sm p-5 border-0">
+
+    <h4 class="text-primary border-bottom pb-3">
+        <i class="bi bi-eye"></i>
+        Revisión Final del Documento
+    </h4>
+
+    <div class="alert alert-info mt-3">
+        Verifique cuidadosamente la información antes de finalizar la generación del documento.
+    </div>
+
+    <!-- PREVISUALIZACIÓN -->
+    <div class="p-4 bg-white border my-4"
+         style="white-space: pre-line;
+                font-family: 'Times New Roman', serif;
+                font-size: 12pt;
+                min-height: 500px;
+                color: black;">
+
+        @cartaFinal
+
+    </div>
+
+    <!-- CHECKBOX -->
+    <div class="form-check mb-4">
+        <input class="form-check-input"
+               type="checkbox"
+               id="confirmacion"
+               onchange="habilitarBoton()" />
+
+        <label class="form-check-label fw-bold"
+               for="confirmacion">
+
+            Confirmo que revisé la información y estoy conforme con la carta generada.
+
+        </label>
+    </div>
+
+    <!-- BOTONES -->
+    <div class="row g-3">
+
+        <!-- VOLVER -->
+        <div class="col-md-4">
+
+            <form asp-action="Index" method="post">
+
+                <input type="hidden" asp-for="Nombre" />
+                <input type="hidden" asp-for="Identificacion" />
+                <input type="hidden" asp-for="Telefono" />
+                <input type="hidden" asp-for="ModalidadGrado" />
+                <input type="hidden" asp-for="PerfilProfesional" />
+
+                <button type="submit"
+                        class="btn btn-outline-secondary w-100 py-2">
+
+                    <i class="bi bi-arrow-left-circle"></i>
+                    Volver y Editar
+
+                </button>
+
+            </form>
+
+        </div>
+
+        <!-- FINALIZAR -->
+        <div class="col-md-4">
+
+            <form asp-action="GenerarPdfFinal" method="post">
+
+                <input type="hidden"
+                       name="contenido"
+                       value="@cartaFinal" />
+
+                <button type="submit"
+                        id="btnFinalizar"
+                        disabled
+                        class="btn btn-success w-100 py-2">
+
+                    <i class="bi bi-check-circle"></i>
+                    Finalizar y Descargar PDF
+
+                </button>
+
+            </form>
+
+        </div>
+
+        <!-- MENÚ -->
+        <div class="col-md-4">
+
+            <a href="@Url.Action("Index", "Home")"
+               class="btn btn-primary w-100 py-2">
+
+                <i class="bi bi-house"></i>
+                Menú Principal
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+    function habilitarBoton() {
+
+        const check = document.getElementById("confirmacion");
+
+        const boton = document.getElementById("btnFinalizar");
+
+        boton.disabled = !check.checked;
+    }
+
+</script>

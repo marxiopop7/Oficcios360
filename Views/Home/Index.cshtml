@@ -1,0 +1,89 @@
+﻿@{
+    ViewData["Title"] = "Inicio - Oficios 360";
+}
+
+<div class="container-fluid p-0">
+    <div class="text-white text-center py-5 shadow-sm" style="background: linear-gradient(135deg, #002147 0%, #003366 100%); margin-bottom: 30px;">
+        <h1 class="display-4 fw-bold">Oficios 360</h1>
+        <p class="lead">Sistema de Gestión Documental y Apoyo al Estudiante</p>
+        <div class="badge bg-light text-primary px-3 py-2 mt-2 shadow-sm">
+            Facultad Tecnológica - Universidad Distrital
+        </div>
+    </div>
+
+    <div class="container">
+        
+
+        <div class="row g-4 justify-content-center">
+
+            <div class="col-md-5">
+                <div class="card h-100 shadow-sm border-0 transition-hover">
+                    <div class="card-body text-center p-4">
+                        <div class="icon-shape bg-soft-primary mb-4">
+                            <i class="bi bi-file-earmark-text fs-1 text-primary"></i>
+                        </div>
+                        <h3 class="card-title h4 fw-bold">Tramitación RUT</h3>
+                        <p class="card-text text-muted">Accede a la guía paso a paso para gestionar tu documento ante la DIAN con validación automática.</p>
+                        <a href="@Url.Action("Index", "Rut")" class="btn btn-primary w-100 py-2 shadow-sm">Iniciar Trámite</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-5">
+                <div class="card h-100 shadow-sm border-0 transition-hover">
+                    <div class="card-body text-center p-4">
+                        <div class="icon-shape bg-soft-success mb-4">
+                            <i class="bi bi-file-earmark-pdf fs-1 text-success"></i>
+                        </div>
+                        <h3 class="card-title h4 fw-bold">Carta de Presentación</h3>
+                        <p class="card-text text-muted">Genera automáticamente tu carta para pasantías o proyectos de grado en formato profesional PDF.</p>
+                        <a href="@Url.Action("Index", "Carta")" class="btn btn-success w-100 py-2 shadow-sm">Generar Carta</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <footer class="mt-5 pt-4 border-top text-center text-muted small">
+            <p>&copy; 2026 Oficcios 360 - Analisis de sistemas</p>
+        </footer>
+    </div>
+</div>
+
+<style>
+    /* Estilos */
+    .transition-hover {
+        transition: transform 0.3s ease, shadow 0.3s ease;
+    }
+
+        .transition-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 1rem 3rem rgba(0,0,0,.175) !important;
+        }
+
+    .icon-shape {
+        width: 80px;
+        height: 80px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+    }
+
+    .bg-soft-primary {
+        background-color: #e7f1ff;
+    }
+
+    .bg-soft-success {
+        background-color: #e1f5ea;
+    }
+
+    .btn-primary {
+        background-color: #002147;
+        border: none;
+    }
+
+        .btn-primary:hover {
+            background-color: #003366;
+        }
+</style>

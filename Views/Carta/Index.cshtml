@@ -1,0 +1,203 @@
+﻿@model Oficcios360.Models.Estudiante
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.Error
+    </div>
+}
+
+<div class="container">
+
+    <div class="alert alert-secondary text-dark border-0 shadow-sm"
+         style="background-color: #f8f9fa;">
+
+        <strong>Aviso del Sistema:</strong>
+        La aplicación generará el documento automáticamente.
+
+    </div>
+
+    <form asp-action="Previsualizar"
+          method="post"
+          class="card p-4 shadow-sm">
+
+        <div class="row g-3">
+
+            <!-- NOMBRE -->
+            <div class="col-md-6">
+
+                <label class="fw-bold">
+                    Nombre Completo
+                </label>
+
+                <input asp-for="Nombre"
+                       id="nombre"
+                       class="form-control"
+                       required />
+
+                <small id="errorNombre"
+                       class="text-danger"></small>
+
+            </div>
+
+            <!-- CÉDULA -->
+            <div class="col-md-6">
+
+                <label class="fw-bold">
+                    Cédula de Ciudadanía
+                </label>
+
+                <input asp-for="Identificacion"
+                       id="cedula"
+                       class="form-control"
+                       required />
+
+                <small id="errorCedula"
+                       class="text-danger"></small>
+
+            </div>
+
+            <!-- TELÉFONO -->
+            <div class="col-md-6">
+
+                <label class="fw-bold">
+                    Número de Teléfono
+                </label>
+
+                <input asp-for="Telefono"
+                       id="telefono"
+                       class="form-control"
+                       required />
+
+                <small id="errorTelefono"
+                       class="text-danger"></small>
+
+            </div>
+
+            <!-- MODALIDAD -->
+            <div class="col-md-6">
+
+                <label>
+                    Modalidad de Grado
+                </label>
+
+                <select asp-for="ModalidadGrado"
+                        class="form-select">
+
+                    <option>Pasantías</option>
+                    <option>Proyecto de Grado</option>
+                    <option>Monografía</option>
+                    <option>Cursos de Posgrado</option>
+
+                </select>
+
+            </div>
+
+            <!-- PERFIL -->
+            <div class="col-12">
+
+                <label>
+                    Habilidades Profesionales
+                </label>
+
+                <textarea asp-for="PerfilProfesional"
+                          id="perfil"
+                          class="form-control"
+                          rows="4"
+                          required></textarea>
+
+                <small id="errorPerfil"
+                       class="text-danger"></small>
+
+            </div>
+
+        </div>
+
+        <button type="submit"
+                id="btnEnviar"
+                class="btn btn-primary mt-4 py-2 fw-bold"
+                style="background-color: #002147;">
+
+            GENERAR PREVISUALIZACIÓN
+
+        </button>
+
+    </form>
+
+</div>
+
+<script>
+
+    const nombre = document.getElementById("nombre");
+    const cedula = document.getElementById("cedula");
+    const telefono = document.getElementById("telefono");
+    const perfil = document.getElementById("perfil");
+
+    nombre.addEventListener("input", validarNombre);
+    cedula.addEventListener("input", validarCedula);
+    telefono.addEventListener("input", validarTelefono);
+    perfil.addEventListener("input", validarPerfil);
+
+    function validarNombre() {
+
+        const regex = /^[A-Za-záéíóúÁÉÍÓÚñÑ\s]+$/;
+
+        if (!regex.test(nombre.value)) {
+
+            errorNombre.innerText =
+                "Solo se permiten letras.";
+
+        } else {
+
+            errorNombre.innerText = "";
+
+        }
+    }
+
+    function validarCedula() {
+
+        const regex = /^[0-9]+$/;
+
+        if (!regex.test(cedula.value)) {
+
+            errorCedula.innerText =
+                "Solo se permiten números.";
+
+        } else {
+
+            errorCedula.innerText = "";
+
+        }
+    }
+
+    function validarTelefono() {
+
+        const regex = /^[0-9]+$/;
+
+        if (!regex.test(telefono.value)) {
+
+            errorTelefono.innerText =
+                "Solo se permiten números.";
+
+        } else {
+
+            errorTelefono.innerText = "";
+
+        }
+    }
+
+    function validarPerfil() {
+
+        if (perfil.value.length < 20) {
+
+            errorPerfil.innerText =
+                "Debe escribir mínimo 20 caracteres.";
+
+        } else {
+
+            errorPerfil.innerText = "";
+
+        }
+    }
+
+</script>
