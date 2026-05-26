@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Oficcios360.Data;
@@ -11,9 +12,11 @@ using Oficcios360.Data;
 namespace Oficcios360.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260526153407_ModuloSeguimientoExplicito")]
+    partial class ModuloSeguimientoExplicito
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -103,9 +106,6 @@ namespace Oficcios360.Migrations
 
                     b.Property<DateTime>("FechaGeneracion")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<double>("HorasRequeridas")
-                        .HasColumnType("double precision");
 
                     b.Property<DateTime>("PeriodoFin")
                         .HasColumnType("timestamp with time zone");

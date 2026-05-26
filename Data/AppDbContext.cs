@@ -14,5 +14,17 @@ namespace Oficcios360.Data
 
         public DbSet<Encuesta> Encuestas { get; set; }
         public DbSet<Carta> Cartas { get; set; }
+
+        public DbSet<RegistroActividad> RegistroActividades { get; set; }
+        public DbSet<Informe> Informes { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            // Forzamos a que busquen exactamente en minúsculas y en el esquema público
+            modelBuilder.Entity<RegistroActividad>().ToTable("registro_actividades", schema: "public");
+            modelBuilder.Entity<Informe>().ToTable("informes", schema: "public");
+        }
     }
 }

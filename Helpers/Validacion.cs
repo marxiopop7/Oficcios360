@@ -22,5 +22,23 @@ namespace Oficcios360.Helpers
 
             return nombreValido && cedulaValida && telefonoValido && perfilValido;
         }
+        public bool ValidarCamposSeguimiento(Oficcios360.Models.RegistroActividad actividad)
+        {
+            if (actividad == null) return false;
+
+            // Validar campos obligatorios vacíos
+            if (string.IsNullOrWhiteSpace(actividad.Descripcion) || string.IsNullOrWhiteSpace(actividad.EstudianteIdentificacion))
+                return false;
+
+            // Validar consistencia de horas en el día
+            if (actividad.HorasDedicadas <= 0 || actividad.HorasDedicadas > 24)
+                return false;
+
+            // Validar que la fecha no sea una fecha futura incoherente
+            if (actividad.Fecha > DateTime.Today)
+                return false;
+
+            return true;
+        }
     }
 }
