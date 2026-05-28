@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Oficcios360.Data;
@@ -11,9 +12,11 @@ using Oficcios360.Data;
 namespace Oficcios360.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260528161808_AgregarFormacionesAcademicas")]
+    partial class AgregarFormacionesAcademicas
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -96,9 +99,8 @@ namespace Oficcios360.Migrations
                     b.Property<int>("AnioFin")
                         .HasColumnType("integer");
 
-                    b.Property<string>("EstudianteId")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("EstudianteId")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Institucion")
                         .IsRequired()

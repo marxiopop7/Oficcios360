@@ -1,0 +1,133 @@
+﻿@model Oficcios360.Models.Estudiante
+
+@{
+    ViewData["Title"] = "Vista Previa Estructural";
+}
+
+<div class="container mt-4" style="max-width: 800px;">
+    <form asp-action="ProcesarAccion" method="post">
+
+        <input type="hidden" asp-for="Nombre" />
+        <input type="hidden" asp-for="Identificacion" />
+        <input type="hidden" asp-for="Correo" />
+        <input type="hidden" asp-for="Telefono" />
+        <input type="hidden" asp-for="PerfilProfesional" />
+        <input type="hidden" asp-for="LugarFechaNacimiento" />
+        <input type="hidden" asp-for="Sexo" />
+        <input type="hidden" asp-for="EstadoCivil" />
+        <input type="hidden" asp-for="Direccion" />
+
+        @if (Model.Formaciones != null)
+        {
+            @for (int i = 0; i < Model.Formaciones.Count; i++)
+            {
+                <input type="hidden" name="Formaciones[@i].Institucion" value="@Model.Formaciones[i].Institucion" />
+                <input type="hidden" name="Formaciones[@i].Titulo" value="@Model.Formaciones[i].Titulo" />
+                <input type="hidden" name="Formaciones[@i].AnioFin" value="@Model.Formaciones[i].AnioFin" />
+            }
+        }
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <span class="badge bg-success shadow-sm p-2 fs-6">
+                <i class="bi bi-database-check"></i> Sincronizado en PostgreSQL
+            </span>
+
+            <div class="gap-2 d-flex">
+                <button type="submit" name="botonAccion" value="Modificar" class="btn btn-sm btn-outline-secondary shadow-sm">
+                    <i class="bi bi-pencil-square"></i> Modificar Datos
+                </button>
+
+                <a asp-action="SalirYLimpiar" class="btn btn-sm btn-outline-danger shadow-sm" onclick="return confirmarSalida();">
+                    <i class="bi bi-box-arrow-left"></i> Salir y Limpiar
+                </a>
+            </div>
+        </div>
+
+        <div class="card shadow p-5 bg-white border-0" style="font-family: Arial, sans-serif; color: #222;">
+
+            <div class="text-center fw-bold text-white p-2 mb-4" style="background-color: #7A7270; letter-spacing: 2px; font-size: 14px;">
+                DATOS PERSONALES
+            </div>
+
+            <table class="table table-borderless align-middle mb-4" style="font-size: 14px;">
+                <tbody>
+                    <tr>
+                        <td width="35%" class="fw-bold text-secondary text-uppercase" style="font-size: 12px; letter-spacing: 0.5px;">NOMBRES Y APELLIDOS:</td>
+                        <td class="text-dark fw-bold">@Model.Nombre?.ToUpper()</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold text-secondary text-uppercase" style="font-size: 12px; letter-spacing: 0.5px;">LUGAR Y FECHA DE NACIMIENTO:</td>
+                        <td>@Model.LugarFechaNacimiento</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold text-secondary text-uppercase" style="font-size: 12px; letter-spacing: 0.5px;">CÉDULA DE CIUDADANÍA:</td>
+                        <td>@Model.Identificacion</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold text-secondary text-uppercase" style="font-size: 12px; letter-spacing: 0.5px;">SEXO:</td>
+                        <td>@Model.Sexo</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold text-secondary text-uppercase" style="font-size: 12px; letter-spacing: 0.5px;">ESTADO CIVIL:</td>
+                        <td>@Model.EstadoCivil</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold text-secondary text-uppercase" style="font-size: 12px; letter-spacing: 0.5px;">DIRECCIÓN:</td>
+                        <td>@Model.Direccion</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold text-secondary text-uppercase" style="font-size: 12px; letter-spacing: 0.5px;">TELÉFONO:</td>
+                        <td>@Model.Telefono</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold text-secondary text-uppercase" style="font-size: 12px; letter-spacing: 0.5px;">E-MAIL:</td>
+                        <td class="text-primary fw-bold">@Model.Correo</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="text-center fw-bold text-white p-2 mb-3" style="background-color: #7A7270; letter-spacing: 2px; font-size: 14px;">
+                PERFIL PROFESIONAL
+            </div>
+            <p class="mb-4" style="text-align: justify; font-size: 14px; line-height: 1.6; white-space: pre-line;">
+                @Model.PerfilProfesional
+            </p>
+
+            <div class="text-center fw-bold text-white p-2 mb-3" style="background-color: #7A7270; letter-spacing: 2px; font-size: 14px;">
+                FORMACIÓN ACADÉMICA
+            </div>
+
+            <div class="ps-2" style="font-size: 14px;">
+                @if (Model.Formaciones != null && Model.Formaciones.Count > 0)
+                {
+                    foreach (var estudio in Model.Formaciones)
+                    {
+                        <div class="mb-3">
+                            <span class="text-uppercase fw-bold text-dark">@estudio.Institucion</span>
+                            <span class="fw-bold text-muted">|</span>
+                            <span class="fw-bold text-secondary text-uppercase">@estudio.Titulo</span>
+                            <br />
+                            <span class="text-muted fw-bold" style="font-size: 13px;">@estudio.AnioFin</span>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p class="text-muted italic">No se han registrado estudios académicos.</p>
+                }
+            </div>
+        </div>
+
+        <div class="mt-4 d-flex justify-content-end mb-5">
+            <button type="submit" name="botonAccion" value="DescargarPDF" class="btn btn-danger btn-lg px-5 shadow border-0" style="background-color: #dc3545;">
+                <i class="bi bi-file-earmark-pdf-fill"></i> Descargar PDF Profesional
+            </button>
+        </div>
+    </form>
+</div>
+
+<script>
+    function confirmarSalida() {
+        return confirm("¿Está seguro de que desea salir? Se borrará todo el progreso en pantalla y se limpiará el formulario.");
+    }
+</script>

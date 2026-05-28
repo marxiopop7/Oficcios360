@@ -29,5 +29,17 @@ namespace Oficcios360.Helpers
             if (horasRequeridas <= 0) return false;
             return horasActuales >= horasRequeridas;
         }
+
+        
+        public Estudiante OrganizarEstructuraHojaVida(Estudiante estudianteLogueado)
+        {
+            
+            if (estudianteLogueado.Formaciones != null)
+            {
+                estudianteLogueado.Formaciones = estudianteLogueado.Formaciones.OrderBy(f => f.Institucion).ToList();
+            }
+
+            return estudianteLogueado;
+        }
     }
 }
